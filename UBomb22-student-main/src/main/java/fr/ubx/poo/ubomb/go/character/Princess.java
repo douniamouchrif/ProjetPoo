@@ -9,5 +9,12 @@ import fr.ubx.poo.ubomb.go.Movable;
 import fr.ubx.poo.ubomb.go.TakeVisitor;
 import fr.ubx.poo.ubomb.go.decor.bonus.*;
 
-public class Princess {
+public class Princess extends GameObject {
+    public Princess(Game game, Position position) {
+        super(game, position);
+    }
+
+    public Princess(Position position) {
+        super(position);
+    }
 }
