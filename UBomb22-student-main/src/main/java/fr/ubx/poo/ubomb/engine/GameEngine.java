@@ -41,7 +41,8 @@ public final class GameEngine {
     private static AnimationTimer gameLoop;
     private final Game game;
     private final Player player;
-    private final Princess princess;
+    private final Princess princess = new Princess(new Position(4,5));
+    // position de la princess = position du joueur + [...]
     private final List<Sprite> sprites = new LinkedList<>();
     private final Set<Sprite> cleanUpSprites = new HashSet<>();
     private final Stage stage;
