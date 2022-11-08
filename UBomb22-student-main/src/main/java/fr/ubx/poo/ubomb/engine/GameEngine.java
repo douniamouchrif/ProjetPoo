@@ -19,6 +19,7 @@ import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
@@ -81,7 +82,8 @@ public final class GameEngine {
             sprites.add(SpriteFactory.create(layer, decor));
             decor.setModified(true);
         }
-        sprites.add(new SpritePrincess(layer, image, princess));
+
+        sprites.add(new SpritePrincess(layer, ImageResource.PRINCESS.getImage(), princess));
         sprites.add(new SpritePlayer(layer, player));
     }
 
