@@ -8,10 +8,12 @@ import fr.ubx.poo.ubomb.game.Direction;
 import fr.ubx.poo.ubomb.game.Game;
 import fr.ubx.poo.ubomb.game.Position;
 import fr.ubx.poo.ubomb.go.character.Player;
+import fr.ubx.poo.ubomb.go.character.Princess;
 import fr.ubx.poo.ubomb.view.ImageResource;
 import fr.ubx.poo.ubomb.view.Sprite;
 import fr.ubx.poo.ubomb.view.SpriteFactory;
 import fr.ubx.poo.ubomb.view.SpritePlayer;
+import fr.ubx.poo.ubomb.view.SpritePrincess;
 import javafx.animation.AnimationTimer;
 import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
@@ -38,6 +40,7 @@ public final class GameEngine {
     private static AnimationTimer gameLoop;
     private final Game game;
     private final Player player;
+    private final Princess princess;
     private final List<Sprite> sprites = new LinkedList<>();
     private final Set<Sprite> cleanUpSprites = new HashSet<>();
     private final Stage stage;
@@ -78,7 +81,7 @@ public final class GameEngine {
             sprites.add(SpriteFactory.create(layer, decor));
             decor.setModified(true);
         }
-
+        sprites.add(new SpritePrincess(layer, image, princess));
         sprites.add(new SpritePlayer(layer, player));
     }
 
