@@ -17,4 +17,5 @@ public class Princess extends GameObject {
     public Princess(Position position) {
         super(position);
     }
+    
 }
