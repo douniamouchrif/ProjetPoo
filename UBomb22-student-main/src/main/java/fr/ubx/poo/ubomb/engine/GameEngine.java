@@ -41,8 +41,7 @@ public final class GameEngine {
     private static AnimationTimer gameLoop;
     private final Game game;
     private final Player player;
-    private final Princess princess = new Princess(new Position(10,11));
-    // position de la princess = position du joueur + [...]
+    private Princess princess;
     private final List<Sprite> sprites = new LinkedList<>();
     private final Set<Sprite> cleanUpSprites = new HashSet<>();
     private final Stage stage;
@@ -83,6 +82,8 @@ public final class GameEngine {
             sprites.add(SpriteFactory.create(layer, decor));
             decor.setModified(true);
         }
+
+        princess = new Princess(new Position(game.grid().width()-1,game.grid().height()-1));
 
         sprites.add(new SpritePrincess(layer, ImageResource.PRINCESS.getImage(), princess));
         sprites.add(new SpritePlayer(layer, player));
