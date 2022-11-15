@@ -13,6 +13,7 @@ import fr.ubx.poo.ubomb.go.Movable;
 import fr.ubx.poo.ubomb.go.TakeVisitor;
 import fr.ubx.poo.ubomb.go.decor.Tree;
 import fr.ubx.poo.ubomb.go.decor.Stone;
+import fr.ubx.poo.ubomb.go.decor.Box;
 import fr.ubx.poo.ubomb.go.decor.bonus.*;
 import fr.ubx.poo.ubomb.launcher.Entity;
 
@@ -74,6 +75,9 @@ public class Player extends GameObject implements Movable, TakeVisitor {
             if (game.grid().get(new Position(getPosition().x(),getPosition().y()-1)) instanceof Stone ){
                 return false;
             }
+            if (game.grid().get(new Position(getPosition().x(),getPosition().y()-1)) instanceof Box ){
+                return Box.canMove(direction); //on sait pas comment faire pour box
+            }
         }
         if(direction == Direction.DOWN){
             if (getPosition().y() >= game.grid().height()-1){
@@ -108,7 +112,6 @@ public class Player extends GameObject implements Movable, TakeVisitor {
                 return false;
             }
         }
-
 
         return true;
     }
