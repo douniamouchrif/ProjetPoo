@@ -60,6 +60,10 @@ public class Player extends GameObject implements Movable, TakeVisitor {
 
     public final boolean canMove(Direction direction) {
         // Need to be updated ;-)
+        //doit pas dépasser la carte
+        // peut marcher sur une case (clé bonus perso)
+        // peut pas marcher sur une case (rocher arbre caisse)
+        //if()
         return true;
     }
 
