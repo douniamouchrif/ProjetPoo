@@ -8,16 +8,15 @@ import fr.ubx.poo.ubomb.engine.Timer;
 import fr.ubx.poo.ubomb.game.Direction;
 import fr.ubx.poo.ubomb.game.Game;
 import fr.ubx.poo.ubomb.game.Position;
-import fr.ubx.poo.ubomb.go.GameObject;
-import fr.ubx.poo.ubomb.go.Movable;
-import fr.ubx.poo.ubomb.go.TakeVisitor;
+import fr.ubx.poo.ubomb.go.*;
+import fr.ubx.poo.ubomb.go.decor.Decor;
 import fr.ubx.poo.ubomb.go.decor.Tree;
 import fr.ubx.poo.ubomb.go.decor.Stone;
 import fr.ubx.poo.ubomb.go.decor.Box;
 import fr.ubx.poo.ubomb.go.decor.bonus.*;
 import fr.ubx.poo.ubomb.launcher.Entity;
 
-public class Player extends GameObject implements Movable, TakeVisitor {
+public class Player extends GameObject implements Movable, TakeVisitor , WalkVisitor {
 
     private Direction direction;
     private boolean moveRequested = false;
@@ -42,6 +41,8 @@ public class Player extends GameObject implements Movable, TakeVisitor {
         if (next instanceof Bonus bonus) {
                 bonus.takenBy(this);
         }
+
+
         setPosition(nextPos);
     }
 
@@ -65,73 +66,31 @@ public class Player extends GameObject implements Movable, TakeVisitor {
     public final boolean canMove(Direction direction) {
         // Need to be updated ;-)
         // peut pas marcher sur une case (caisse)
+        Player player = new Player(game , new Position(getPosition().x(),getPosition().y()) );
         if(direction == Direction.UP){
             if (getPosition().y() <= 0){
                 return false;
             }
-            if (game.grid().get(new Position(getPosition().x(),getPosition().y()-1)) instanceof Tree ){
-                return false;
-            }
-            if (game.grid().get(new Position(getPosition().x(),getPosition().y()-1)) instanceof Stone ){
-                return false;
-            }
-            if (game.grid().get(new Position(getPosition().x(),getPosition().y()-1)) instanceof Box ){
-                Box box = new Box(new Position(getPosition().x(), getPosition().y()));
-                if (!box.canMove(direction)){
-                    return false;
-                }; //on sait pas comment faire pour box
-            }
+            game.grid().get(new Position(getPosition().x(),getPosition().y()-1)).walkableBy(player);
+
         }
         if(direction == Direction.DOWN){
             if (getPosition().y() >= game.grid().height()-1){
                 return false;
             }
-            if (game.grid().get(new Position(getPosition().x(),getPosition().y()+1)) instanceof Tree ){
-                return false;
-            }
-            if (game.grid().get(new Position(getPosition().x(),getPosition().y()+1)) instanceof Stone ){
-                return false;
-            }
-            if (game.grid().get(new Position(getPosition().x(),getPosition().y()+1)) instanceof Box ){
-                Box box = new Box(new Position(getPosition().x(), getPosition().y()));
-                if (!box.canMove(direction)){
-                    return false;
-                }; //on sait pas comment faire pour box
-            }
+            game.grid().get(new Position(getPosition().x(),getPosition().y()+1)).walkableBy(player);
         }
         if(direction == Direction.LEFT){
             if (getPosition().x() <= 0){
                 return false;
             }
-            if (game.grid().get(new Position(getPosition().x()-1,getPosition().y())) instanceof Tree ){
-                return false;
-            }
-            if (game.grid().get(new Position(getPosition().x()-1,getPosition().y())) instanceof Stone ){
-                return false;
-            }
-            if (game.grid().get(new Position(getPosition().x()-1,getPosition().y())) instanceof Box ){
-                Box box = new Box(new Position(getPosition().x(), getPosition().y()));
-                if (!box.canMove(direction)){
-                    return false;
-                }; //on sait pas comment faire pour box
-            }
+            game.grid().get(new Position(getPosition().x()-1,getPosition().y())).walkableBy(player);
         }
         if(direction == Direction.RIGHT){
             if (getPosition().x() >= game.grid().width()-1){
                 return false;
             }
-            if (game.grid().get(new Position(getPosition().x()+1,getPosition().y())) instanceof Tree ){
-                return false;
-            }
-            if (game.grid().get(new Position(getPosition().x()+1,getPosition().y())) instanceof Stone ){
-                return false;
-            }
-            if (game.grid().get(new Position(getPosition().x()+1,getPosition().y())) instanceof Box ){
-                Box box = new Box(new Position(getPosition().x(), getPosition().y()));
-                if (!box.canMove(direction)){
-                    return false;
-                }; //on sait pas comment faire pour box
-            }
+            game.grid().get(new Position(getPosition().x()+1,getPosition().y())).walkableBy(player);
         }
 
         return true;
