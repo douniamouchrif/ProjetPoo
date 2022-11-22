@@ -76,7 +76,10 @@ public class Player extends GameObject implements Movable, TakeVisitor {
                 return false;
             }
             if (game.grid().get(new Position(getPosition().x(),getPosition().y()-1)) instanceof Box ){
-                return Box.canMove(direction); //on sait pas comment faire pour box
+                Box box = new Box(new Position(getPosition().x(), getPosition().y()));
+                if (!box.canMove(direction)){
+                    return false;
+                }; //on sait pas comment faire pour box
             }
         }
         if(direction == Direction.DOWN){
@@ -89,6 +92,12 @@ public class Player extends GameObject implements Movable, TakeVisitor {
             if (game.grid().get(new Position(getPosition().x(),getPosition().y()+1)) instanceof Stone ){
                 return false;
             }
+            if (game.grid().get(new Position(getPosition().x(),getPosition().y()+1)) instanceof Box ){
+                Box box = new Box(new Position(getPosition().x(), getPosition().y()));
+                if (!box.canMove(direction)){
+                    return false;
+                }; //on sait pas comment faire pour box
+            }
         }
         if(direction == Direction.LEFT){
             if (getPosition().x() <= 0){
@@ -100,6 +109,12 @@ public class Player extends GameObject implements Movable, TakeVisitor {
             if (game.grid().get(new Position(getPosition().x()-1,getPosition().y())) instanceof Stone ){
                 return false;
             }
+            if (game.grid().get(new Position(getPosition().x()-1,getPosition().y())) instanceof Box ){
+                Box box = new Box(new Position(getPosition().x(), getPosition().y()));
+                if (!box.canMove(direction)){
+                    return false;
+                }; //on sait pas comment faire pour box
+            }
         }
         if(direction == Direction.RIGHT){
             if (getPosition().x() >= game.grid().width()-1){
@@ -110,6 +125,12 @@ public class Player extends GameObject implements Movable, TakeVisitor {
             }
             if (game.grid().get(new Position(getPosition().x()+1,getPosition().y())) instanceof Stone ){
                 return false;
+            }
+            if (game.grid().get(new Position(getPosition().x()+1,getPosition().y())) instanceof Box ){
+                Box box = new Box(new Position(getPosition().x(), getPosition().y()));
+                if (!box.canMove(direction)){
+                    return false;
+                }; //on sait pas comment faire pour box
             }
         }
 
