@@ -16,7 +16,8 @@ public class Box extends Decor implements Movable, Walkable {
 
     @Override
     public boolean canMove(Direction direction) {
-        return true;
+        //this.walkableBy(Player player);
+        return true; //faire appel a walkableby
     }
 
     @Override
