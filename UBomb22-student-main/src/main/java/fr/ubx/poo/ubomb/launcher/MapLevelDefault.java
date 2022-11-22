@@ -11,7 +11,7 @@ public class MapLevelDefault extends MapLevel {
             {Empty, Empty, Empty, Empty, Stone, Stone, Stone, Empty, Empty, Empty, Empty, Empty},
             {Empty, Empty, Empty, Empty, Empty, Empty, Empty, Key, Empty, Stone, Empty, Empty},
             {Empty, Tree, Empty, Tree, Empty, Empty, Empty, Empty, Empty, Stone, Empty, Empty},
-            {Empty, Empty, Empty, Tree, Empty, Empty, Empty, Empty, Empty, Stone, Empty, Empty},
+            {Empty, Empty, Empty, Tree, Empty, Empty, Box, Empty, Empty, Stone, Empty, Empty},
             {Empty, Tree, Tree, Tree, Empty, Empty, Empty, Empty, Empty, Stone, Empty, Empty},
             {Empty, Empty, Empty, Empty, Empty, Empty, Empty, Empty, Empty, Empty, Empty, Empty},
             {Stone, Stone, Stone, Stone, Stone, Empty, Empty, Empty, Stone, Stone, Empty, Stone},
