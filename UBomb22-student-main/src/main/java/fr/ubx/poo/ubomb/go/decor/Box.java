@@ -7,9 +7,10 @@ import fr.ubx.poo.ubomb.go.GameObject;
 import fr.ubx.poo.ubomb.go.Movable;
 import fr.ubx.poo.ubomb.go.WalkVisitor;
 import fr.ubx.poo.ubomb.go.Walkable;
+import fr.ubx.poo.ubomb.go.character.Player;
 import fr.ubx.poo.ubomb.go.decor.bonus.Bonus;
 
-public class Box extends Decor implements Movable, Walkable {
+public class Box extends Decor implements Movable {
     public Box(Position position) {
         super(position);
     }
@@ -23,5 +24,10 @@ public class Box extends Decor implements Movable, Walkable {
     @Override
     public void doMove(Direction direction) {
 
+    }
+
+    @Override
+    public boolean walkableBy(Player player) {
+        return player.walk(this);
     }
 }
