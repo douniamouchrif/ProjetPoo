@@ -33,6 +33,10 @@ public class Player extends GameObject implements Movable, TakeVisitor , WalkVis
     public void take(Key key) {
         System.out.println("Take the key ...");
     }
+    @Override
+    public boolean walk(Princess princess) {return false;}
+    @Override
+    public boolean walk(Box box) {return false;}
 
     public void doMove(Direction direction) {
         // This method is called only if the move is possible, do not check again
@@ -68,42 +72,14 @@ public class Player extends GameObject implements Movable, TakeVisitor , WalkVis
 
     public final boolean canMove(Direction direction) {
         // Need to be updated ;-)
-        // peut pas marcher sur une case (caisse)
         Position nextPos = direction.nextPosition(getPosition());
-        Player player = new Player(game , new Position(getPosition().x(),getPosition().y()) );
-        if(direction == Direction.UP){
-            if (getPosition().y() <= 0){
-                return false;
-            }
-            if (game.grid().get(new Position(getPosition().x(),getPosition().y()-1)) == null){
-                return true;
-            }
+        if(!game.grid().inside(nextPos)){
+            return false;
         }
-        if(direction == Direction.DOWN){
-            if (getPosition().y() >= game.grid().height()-1){
-                return false;
-            }
-            if (game.grid().get(new Position(getPosition().x(),getPosition().y()+1)) == null){
-                return true;
-            }
+        if (game.grid().get(nextPos) == null){
+            return true;
         }
-        if(direction == Direction.LEFT){
-            if (getPosition().x() <= 0){
-                return false;
-            }
-            if (game.grid().get(new Position(getPosition().x()-1,getPosition().y()))== null){
-                return true;
-            }
-        }
-        if(direction == Direction.RIGHT){
-            if (getPosition().x() >= game.grid().width()-1){
-                return false;
-            }
-            if (game.grid().get(new Position(getPosition().x()+1,getPosition().y()))== null){
-                return true;
-            }
-        }
-        return game.grid().get(nextPos).walkableBy(player);
+        return game.grid().get(nextPos).walkableBy(this);
     }
 
     public void update(long now) {
