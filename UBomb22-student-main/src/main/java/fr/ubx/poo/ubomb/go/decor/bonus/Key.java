@@ -19,4 +19,5 @@ public class Key extends Bonus {
     public void takenBy(Player player) {
         player.take(this);
     }
+
 }
