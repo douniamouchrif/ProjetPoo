@@ -18,4 +18,9 @@ public class Princess extends GameObject {
         super(position);
     }
 
+    @Override
+    public boolean walkableBy(Player player) {
+        return player.walk(this);
+    }
+
 }
