@@ -15,6 +15,8 @@ public class Level implements Grid {
 
     private final MapLevel entities;
 
+    //private final Game game;
+
 
     private final Map<Position, Decor> elements = new HashMap<>();
 
@@ -73,6 +75,18 @@ public class Level implements Grid {
 
     @Override
     public boolean inside(Position position) {
+        if (position.y() < 0){
+            return false;
+        }
+        if (position.y() > height()-1){
+            return false;
+        }
+        if (position.x() < 0){
+            return false;
+        }
+        if (position.x() > width()-1){
+            return false;
+        }
         return true;
     }
 
