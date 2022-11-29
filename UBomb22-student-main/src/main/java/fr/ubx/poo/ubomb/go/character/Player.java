@@ -4,23 +4,18 @@
 
 package fr.ubx.poo.ubomb.go.character;
 
-import fr.ubx.poo.ubomb.engine.Timer;
 import fr.ubx.poo.ubomb.game.Direction;
 import fr.ubx.poo.ubomb.game.Game;
 import fr.ubx.poo.ubomb.game.Position;
 import fr.ubx.poo.ubomb.go.*;
-import fr.ubx.poo.ubomb.go.decor.Decor;
-import fr.ubx.poo.ubomb.go.decor.Tree;
-import fr.ubx.poo.ubomb.go.decor.Stone;
 import fr.ubx.poo.ubomb.go.decor.Box;
 import fr.ubx.poo.ubomb.go.decor.bonus.*;
-import fr.ubx.poo.ubomb.launcher.Entity;
 
 public class Player extends GameObject implements Movable, TakeVisitor , WalkVisitor {
 
     private Direction direction;
     private boolean moveRequested = false;
-    private final int lives;
+    private int lives; //on a enlevé le private final
 
     public Player(Game game, Position position) {
         super(game, position);
@@ -28,13 +23,32 @@ public class Player extends GameObject implements Movable, TakeVisitor , WalkVis
         this.lives = game.configuration().playerLives();
     }
 
-
     @Override
     public void take(Key key) {
         System.out.println("Take the key ...");
     }
     @Override
-    public boolean walk(Princess princess) {return true;}
+    public void take(Heart heart) {
+        System.out.println("Take the heart ...");
+    }
+    @Override
+    public void take(BombNumberInc bombnumberinc) {
+        System.out.println("Take the bombnumbinc ...");
+    }
+    @Override
+    public void take(BombNumberDec bombnumberdec) {
+        System.out.println("Take the bombnumbdec ...");
+    }
+    @Override
+    public void take(BombRangeInc bombrangeinc) {
+        System.out.println("Take the bombrangeinc ...");
+    }
+    @Override
+    public void take(BombRangeDec bombrangedec) {
+        System.out.println("Take the bombrangedec ...");
+    }
+    @Override
+    public boolean walk(Princess princess) {return false;}
     @Override
     public boolean walk(Box box) {
         System.out.println("move the box ...");
@@ -60,6 +74,10 @@ public class Player extends GameObject implements Movable, TakeVisitor , WalkVis
 
     public int getLives() {
         return lives;
+    }
+
+    public void setLives(int lives) {
+        this.lives = lives;
     }
 
     public Direction getDirection() {

@@ -4,19 +4,19 @@ import static fr.ubx.poo.ubomb.launcher.Entity.*;
 
 public class MapLevelDefault extends MapLevel {
     private final static Entity[][] level1 = {
-            {Empty, Key, Empty, Empty, Empty, Empty, Box, Empty, Empty, Empty, Empty, Empty},
-            {Key, Empty, Stone, Empty, Stone, Empty, Stone, Stone, Stone, Stone, Empty, Empty},
+            {Empty, Empty, Empty, Empty, Empty, Empty, Box, Empty, Empty, Empty, Empty, Empty},
+            {Empty, Empty, Stone, Empty, Stone, Empty, Stone, Stone, Stone, Stone, Empty, Empty},
             {Empty, Empty, Empty, Empty, Stone, Empty, Stone, Empty, Empty, Stone, Empty, Empty},
-            {Empty, Empty, Empty, Empty, Stone, Empty, Stone, Empty, Box, Stone, Empty, Empty},
+            {Empty, BombRangeInc, Empty, Empty, Stone, Empty, Stone, Empty, Box, Stone, Empty, Empty},
             {Empty, Empty, Empty, Empty, Stone, Stone, Stone, Empty, Empty, Empty, Empty, Empty},
             {Empty, Empty, Empty, Empty, Empty, Empty, Empty, Key, Empty, Stone, Empty, Empty},
-            {Empty, Tree, Empty, Tree, Empty, Empty, Empty, Empty, Empty, Stone, Empty, Empty},
+            {Empty, Tree, Empty, Tree, Empty, Empty, Empty, Empty, Empty, Stone, Empty, BombNumberDec},
             {Empty, Empty, Empty, Tree, Empty, Empty, Box, Empty, Empty, Stone, Empty, Empty},
             {Empty, Tree, Tree, Tree, Empty, Empty, Empty, Empty, Empty, Stone, Empty, Empty},
-            {Empty, Empty, Empty, Empty, Empty, Empty, Empty, Empty, Empty, Empty, Empty, Empty},
+            {Empty, Empty, BombNumberInc, Empty, Empty, Empty, Empty, Empty, Empty, Empty, Empty, Empty},
             {Stone, Stone, Stone, Stone, Stone, Empty, Empty, Empty, Stone, Stone, Empty, Stone},
-            {Empty, Empty, Empty, Empty, Empty, Empty, Empty, Empty, Empty, Empty, Empty, Empty},
-            {Empty, Empty, Empty, Box, Empty, Empty, Empty, Empty, Empty, Empty, Empty, Empty}
+            {Empty, Empty, Empty, Empty, Empty, Empty, Heart, Empty, Empty, Empty, Empty, Empty},
+            {Empty, Empty, Empty, Box, Empty, Empty, Empty, Empty, BombRangeDec, Empty, Empty, Empty}
     };
     private final static int width = 12;
     private final static int height = 13;

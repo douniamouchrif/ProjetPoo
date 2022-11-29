@@ -7,13 +7,10 @@ package fr.ubx.poo.ubomb.engine;
 import fr.ubx.poo.ubomb.game.Direction;
 import fr.ubx.poo.ubomb.game.Game;
 import fr.ubx.poo.ubomb.game.Position;
+import fr.ubx.poo.ubomb.go.character.Monster;
 import fr.ubx.poo.ubomb.go.character.Player;
 import fr.ubx.poo.ubomb.go.character.Princess;
-import fr.ubx.poo.ubomb.view.ImageResource;
-import fr.ubx.poo.ubomb.view.Sprite;
-import fr.ubx.poo.ubomb.view.SpriteFactory;
-import fr.ubx.poo.ubomb.view.SpritePlayer;
-import fr.ubx.poo.ubomb.view.SpritePrincess;
+import fr.ubx.poo.ubomb.view.*;
 import javafx.animation.AnimationTimer;
 import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
@@ -41,6 +38,7 @@ public final class GameEngine {
     private static AnimationTimer gameLoop;
     private final Game game;
     private final Player player;
+    private final Monster monster;
     private Princess princess;
     private final List<Sprite> sprites = new LinkedList<>();
     private final Set<Sprite> cleanUpSprites = new HashSet<>();
@@ -53,6 +51,7 @@ public final class GameEngine {
         this.stage = stage;
         this.game = game;
         this.player = game.player();
+        this.monster = game.monster();
         initialize();
         buildAndSetGameLoop();
     }
@@ -87,6 +86,7 @@ public final class GameEngine {
 
         sprites.add(new SpritePrincess(layer, ImageResource.PRINCESS.getImage(), princess));
         sprites.add(new SpritePlayer(layer, player));
+        sprites.add(new SpriteMonster(layer, monster));
     }
 
     void buildAndSetGameLoop() {
@@ -131,7 +131,14 @@ public final class GameEngine {
         // Create a new Bomb is needed
     }
 
+
     private void checkCollision(long now) {
+        if (game.grid() == player){
+            if (game.grid() == monster){
+                player.setLives((player.getLives())-1);
+            }
+        }
+        update(now);
         // Check a collision between a monster and the player
     }
 
