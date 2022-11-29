@@ -16,18 +16,29 @@ public class Box extends Decor implements Movable {
     }
 
     @Override
+    public boolean walkableBy(Player player) {
+        return player.walk(this);
+    }
+    @Override
     public boolean canMove(Direction direction) {
-        //this.walkableBy(Player player);
-        return true; //faire appel a walkableby
+        //this.walkableBy(player);
+        Position nextPos = direction.nextPosition(getPosition());
+        if(!game.grid().inside(nextPos)){
+            return false;
+        }
+        if ( !(game.grid().get(nextPos) == null)){
+            return false;
+        }
+        return game.grid().get(nextPos).walkableBy(this); //faire appel a walkableby
     }
 
     @Override
     public void doMove(Direction direction) {
+        Position nextPos = direction.nextPosition(getPosition());
+        game.grid().remove(this.getPosition());
+        game.grid().set(nextPos, this);
+
 
     }
 
-    @Override
-    public boolean walkableBy(Player player) {
-        return player.walk(this);
-    }
 }
