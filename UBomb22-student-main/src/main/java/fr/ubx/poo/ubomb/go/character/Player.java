@@ -34,9 +34,12 @@ public class Player extends GameObject implements Movable, TakeVisitor , WalkVis
         System.out.println("Take the key ...");
     }
     @Override
-    public boolean walk(Princess princess) {return false;}
+    public boolean walk(Princess princess) {return true;}
     @Override
-    public boolean walk(Box box) {return true;}
+    public boolean walk(Box box) {
+        System.out.println("move the box ...");
+        (new Box(game ,getPosition())).doMove(direction);
+        return true;}
 
     public void doMove(Direction direction) {
         // This method is called only if the move is possible, do not check again
@@ -46,9 +49,10 @@ public class Player extends GameObject implements Movable, TakeVisitor , WalkVis
                 bonus.takenBy(this);
         }
         if (next instanceof Box box){
-            if (box.canMove(direction)){
-                box.doMove(direction);
+            if (!(new Box(game ,getPosition())).canMove(direction)){
+                return;
             }
+            box.walkableBy(this);
         }
         setPosition(nextPos);
     }
