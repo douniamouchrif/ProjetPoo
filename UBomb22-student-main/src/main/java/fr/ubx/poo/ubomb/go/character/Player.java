@@ -36,7 +36,7 @@ public class Player extends GameObject implements Movable, TakeVisitor , WalkVis
     @Override
     public boolean walk(Princess princess) {return false;}
     @Override
-    public boolean walk(Box box) {return false;}
+    public boolean walk(Box box) {return true;}
 
     public void doMove(Direction direction) {
         // This method is called only if the move is possible, do not check again
