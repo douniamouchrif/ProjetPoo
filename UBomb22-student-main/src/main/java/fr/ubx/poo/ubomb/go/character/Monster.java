@@ -10,12 +10,12 @@ public class Monster extends GameObject implements Movable {
 
     private Direction direction;
     private boolean moveRequested = false;
-    private final int lives;
+    //private int lives;
 
     public Monster(Game game, Position position) {
         super(game, position);
         this.direction = Direction.DOWN;
-        this.lives = game.configuration().playerLives();
+        //this.lives = game.configuration().playerLives();
     }
 
     public Direction getDirection() {
