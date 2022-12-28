@@ -10,13 +10,13 @@ import fr.ubx.poo.ubomb.go.Walkable;
 import fr.ubx.poo.ubomb.go.character.Player;
 import fr.ubx.poo.ubomb.go.decor.bonus.Bonus;
 
-public class Box extends Decor implements Movable {
-    public Box(Position position) {
-        super(position);
-    }
+public class Box extends Decor  {
 
     public Box(Game game, Position position) {
         super(game, position);
+    }
+    public Box(Position position) {
+        super(position);
     }
 
     @Override
@@ -25,7 +25,6 @@ public class Box extends Decor implements Movable {
     }
     @Override
     public boolean canMove(Direction direction) {
-        //this.walkableBy(player);
         Position nextPos = direction.nextPosition(getPosition());
         if(!game.grid().inside(nextPos)){
             return false;
@@ -33,15 +32,13 @@ public class Box extends Decor implements Movable {
         if ( game.grid().get(nextPos) == null){
             return true;
         }
-        return game.grid().get(nextPos).walkableBy(this);
+        return false;
     }
 
     @Override
     public void doMove(Direction direction) {
         Position nextPos = direction.nextPosition(getPosition());
-        game.grid().remove(getPosition());
-        (new Box(nextPos)).setPosition(nextPos);
-        System.out.println("test");
+        setPosition(nextPos);
     }
 
 }
