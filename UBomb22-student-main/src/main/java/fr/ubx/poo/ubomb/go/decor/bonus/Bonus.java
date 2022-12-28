@@ -4,6 +4,7 @@
 
 package fr.ubx.poo.ubomb.go.decor.bonus;
 
+import fr.ubx.poo.ubomb.game.Direction;
 import fr.ubx.poo.ubomb.game.Position;
 import fr.ubx.poo.ubomb.go.Takeable;
 import fr.ubx.poo.ubomb.go.character.Player;
@@ -22,6 +23,13 @@ public abstract class Bonus extends Decor implements Takeable {
     @Override
     public void explode() {
         remove();
+    }
+
+    public boolean canMove(Direction direction){
+        return false;
+    }
+    public void doMove(Direction direction){
+
     }
 
 }
