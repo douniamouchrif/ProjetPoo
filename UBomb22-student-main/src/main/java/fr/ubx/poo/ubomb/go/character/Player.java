@@ -59,6 +59,7 @@ public class Player extends GameObject implements Movable, TakeVisitor , WalkVis
     public boolean walk(Box box) {
         System.out.println("move the box ...");
         (new Box(game ,getPosition())).doMove(direction);
+        //box.doMove(direction);
         return true;}
 
     public void doMove(Direction direction) {
