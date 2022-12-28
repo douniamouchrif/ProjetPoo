@@ -16,11 +16,17 @@ public class Player extends GameObject implements Movable, TakeVisitor , WalkVis
     private Direction direction;
     private boolean moveRequested = false;
     private int lives; //on a enlevé le private final
+    private int availableBombs;
+    private int keys;
+    private int range;
 
     public Player(Game game, Position position) {
         super(game, position);
         this.direction = Direction.DOWN;
         this.lives = game.configuration().playerLives();
+        this.availableBombs = game.configuration().bombBagCapacity();
+        this.keys = game.configuration().keys();
+        this.range = game.configuration().range();
     }
 
     @Override
@@ -74,6 +80,17 @@ public class Player extends GameObject implements Movable, TakeVisitor , WalkVis
 
     public int getLives() {
         return lives;
+    }
+
+    public int getAvailableBombs() {
+        return availableBombs;
+    }
+
+    public int getKeys() {
+        return keys;
+    }
+    public int getRange() {
+        return range;
     }
 
     public void setLives(int lives) {
