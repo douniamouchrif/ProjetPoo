@@ -31,6 +31,9 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 
 public final class GameEngine {
 
@@ -44,6 +47,7 @@ public final class GameEngine {
     private StatusBar statusBar;
     private Pane layer;
     private Input input;
+
 
     public GameEngine(Game game, final Stage stage) {
         this.stage = stage;
@@ -175,8 +179,13 @@ public final class GameEngine {
 
 
     private void update(long now) {
-        player.update(now);
+        //timer.start();
         monster.update(now);
+        player.update(now);
+
+        //Timer timer = new Timer();
+        //timer.schedule(monster.update(now), 2000);
+        //timer.update(now);
         if (player.getLives() == 0) {
             gameLoop.stop();
             showMessage("Perdu!", Color.RED);
