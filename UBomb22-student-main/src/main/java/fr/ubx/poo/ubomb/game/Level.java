@@ -35,6 +35,9 @@ public class Level implements Grid {
                     case Tree:
                         elements.put(position, new Tree(position));
                         break;
+                    case Princess:
+                        elements.put(position, new Princess(position));
+                        break;
                     case Key:
                         elements.put(position, new Key(position));
                         break;
