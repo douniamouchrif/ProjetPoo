@@ -9,7 +9,6 @@ import fr.ubx.poo.ubomb.game.Game;
 import fr.ubx.poo.ubomb.game.Position;
 import fr.ubx.poo.ubomb.go.character.Monster;
 import fr.ubx.poo.ubomb.go.character.Player;
-import fr.ubx.poo.ubomb.go.character.Princess;
 import fr.ubx.poo.ubomb.view.*;
 import javafx.animation.AnimationTimer;
 import javafx.animation.TranslateTransition;
@@ -39,7 +38,6 @@ public final class GameEngine {
     private final Game game;
     private final Player player;
     private final Monster monster;
-    private Princess princess;
     private final List<Sprite> sprites = new LinkedList<>();
     private final Set<Sprite> cleanUpSprites = new HashSet<>();
     private final Stage stage;
@@ -82,9 +80,6 @@ public final class GameEngine {
             decor.setModified(true);
         }
 
-        princess = new Princess(new Position(game.grid().width()-1,game.grid().height()-1));
-
-        sprites.add(new SpritePrincess(layer, ImageResource.PRINCESS.getImage(), princess));
         sprites.add(new SpritePlayer(layer, player));
         sprites.add(new SpriteMonster(layer, monster));
     }
@@ -133,10 +128,11 @@ public final class GameEngine {
 
 
     private void checkCollision(long now) {
-        if (game.grid() == player){
-            if (game.grid() == monster){
-                player.setLives((player.getLives())-1);
-            }
+        if (game.player().getPosition().x() == game.monster().getPosition().x() && game.player().getPosition().y() == game.monster().getPosition().y()){
+            System.out.println("Monster ...");
+            game.player().setLives(game.player().getLives()-1);
+            //game.configuration().playerInvisibilityTime();
+            update(now);
         }
         update(now);
         // Check a collision between a monster and the player
@@ -180,7 +176,7 @@ public final class GameEngine {
 
     private void update(long now) {
         player.update(now);
-
+        monster.update(now);
         if (player.getLives() == 0) {
             gameLoop.stop();
             showMessage("Perdu!", Color.RED);
