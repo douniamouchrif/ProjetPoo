@@ -19,7 +19,7 @@ public class Timer {
         remaining = duration;
     }
 
-    public void update(long now) { // pour vouger les monstres
+    public void update(long now) { // pour bouger les monstres
         // time is in ns
         if (running) {
             remaining = duration - (now - startTime) / 1000000;
