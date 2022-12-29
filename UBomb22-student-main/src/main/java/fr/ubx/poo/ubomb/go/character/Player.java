@@ -4,10 +4,12 @@
 
 package fr.ubx.poo.ubomb.go.character;
 
+import fr.ubx.poo.ubomb.engine.Input;
 import fr.ubx.poo.ubomb.game.Direction;
 import fr.ubx.poo.ubomb.game.Game;
 import fr.ubx.poo.ubomb.game.Position;
 import fr.ubx.poo.ubomb.go.*;
+import fr.ubx.poo.ubomb.go.character.Monster;
 import fr.ubx.poo.ubomb.go.decor.Box;
 import fr.ubx.poo.ubomb.go.decor.bonus.*;
 
@@ -19,6 +21,8 @@ public class Player extends GameObject implements Movable, TakeVisitor , WalkVis
     private int availableBombs;
     private int keys;
     private int range;
+
+    private Input input;
 
     public Player(Game game, Position position) {
         super(game, position);
@@ -32,29 +36,39 @@ public class Player extends GameObject implements Movable, TakeVisitor , WalkVis
     @Override
     public void take(Key key) {
         System.out.println("Take the key ...");
+        key.remove();
+        this.keys = this.keys+1;
     }
     @Override
     public void take(Heart heart) {
         System.out.println("Take the heart ...");
+        heart.remove();
+        this.lives = this.lives+1;
     }
     @Override
     public void take(BombNumberInc bombnumberinc) {
         System.out.println("Take the bombnumbinc ...");
+        bombnumberinc.remove();
+        this.availableBombs = this.availableBombs+1;
     }
     @Override
     public void take(BombNumberDec bombnumberdec) {
         System.out.println("Take the bombnumbdec ...");
+        bombnumberdec.remove();
+        this.availableBombs = this.availableBombs-1;
     }
     @Override
     public void take(BombRangeInc bombrangeinc) {
         System.out.println("Take the bombrangeinc ...");
+        bombrangeinc.remove();
+        this.range = this.range+1;
     }
     @Override
     public void take(BombRangeDec bombrangedec) {
         System.out.println("Take the bombrangedec ...");
+        bombrangedec.remove();
+        this.range = this.range-1;
     }
-    @Override
-    public boolean walk(Princess princess) {return false;}
     @Override
     public boolean walk(Box box) {
         if((new Box(game ,box.getPosition())).canMove(direction)){
@@ -134,6 +148,8 @@ public class Player extends GameObject implements Movable, TakeVisitor , WalkVis
         }
         moveRequested = false;
     }
+
+    public boolean walkableBy(Monster monster) { return true;}
 
     @Override
     public void explode() {
