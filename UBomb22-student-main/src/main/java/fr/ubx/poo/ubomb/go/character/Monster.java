@@ -12,7 +12,7 @@ public class Monster extends GameObject implements Movable {
     private Direction direction;
     private long lastMove;
 
-    Timer time;
+    Timer time = new Timer(2000000000);;
 
     //private int lives;
 
