@@ -16,7 +16,7 @@ public class MapLevelDefault extends MapLevel {
             {Empty, Empty, BombNumberInc, Empty, Empty, Empty, Empty, Empty, Empty, Empty, Empty, Empty},
             {Stone, Stone, Stone, Stone, Stone, Empty, Empty, Empty, Stone, Stone, Empty, Stone},
             {Empty, Empty, Empty, Empty, Empty, Empty, Heart, Empty, Empty, Empty, Empty, Empty},
-            {Empty, Empty, Empty, Box, Empty, Empty, Empty, Empty, BombRangeDec, Empty, Empty, Empty}
+            {Empty, Empty, Empty, Box, Empty, Empty, Empty, Empty, BombRangeDec, Empty, Empty, Princess}
     };
     private final static int width = 12;
     private final static int height = 13;
