@@ -9,6 +9,7 @@ import fr.ubx.poo.ubomb.game.Game;
 import fr.ubx.poo.ubomb.game.Position;
 import fr.ubx.poo.ubomb.go.character.Monster;
 import fr.ubx.poo.ubomb.go.character.Player;
+import fr.ubx.poo.ubomb.go.decor.bonus.Bomb;
 import fr.ubx.poo.ubomb.view.*;
 import javafx.animation.AnimationTimer;
 import javafx.animation.TranslateTransition;
@@ -47,6 +48,7 @@ public final class GameEngine {
     private StatusBar statusBar;
     private Pane layer;
     private Input input;
+    private Bomb bomb;
 
     private long invTime;
 
@@ -98,7 +100,7 @@ public final class GameEngine {
 
                 // Do actions
                 update(now);
-                createNewBombs(now);
+                //createNewBombs(now);
                 checkCollision(now);
                 checkExplosions();
 
@@ -130,7 +132,42 @@ public final class GameEngine {
 
     private void createNewBombs(long now) {
         // Create a new Bomb is needed
+
+        //if(input.isBomb()) {
+            //layer.getChildren().add(explosion);
+            int i = 3;
+            long nextStatu = now + 10000000000L;
+            Bomb b2 = new Bomb(player.getPosition());
+            while (i >= 1) {
+                System.out.println("Bomb ...");
+                b2.setStatus(i);
+                sprites.add(new SpriteBomb(layer, b2));
+                if (nextStatu >= now) {
+                    System.out.println("Bomb remove...");
+                    i--;
+                    nextStatu += 10000000000L;
+                    game.grid().remove(b2.getPosition());
+                    //b2.remove();
+                    //System.out.println("Bomb ...");
+                }
+            }
+            b2.setStatus(0);
+            sprites.add(new SpriteBomb(layer, b2));
+        //}
     }
+
+    /*if (now >= nextStatu){
+        nextStatu = now + 1000000000L;
+        while (i >= 1) {
+            System.out.println("Bomb ...");
+            b2.setStatus(i);
+            sprites.add(new SpriteBomb(layer, b2));
+        }
+        System.out.println("Bomb remove...");
+        i--;
+        nextStatu += 10000000000L;
+        game.grid().remove(b2.getPosition());
+    }*/
 
 
     private void checkCollision(long now) {
@@ -138,8 +175,8 @@ public final class GameEngine {
             if(now>=invTime){
                 game.player().setLives(game.player().getLives()-1);
                 System.out.println("Monster ...");
+                invTime = now + game.configuration().playerInvisibilityTime()*1000000;
             }
-            invTime = now + game.configuration().playerInvisibilityTime()*1000000;
         }
         // Check a collision between a monster and the player
     }
@@ -157,6 +194,8 @@ public final class GameEngine {
             player.requestMove(Direction.RIGHT);
         } else if (input.isMoveUp()) {
             player.requestMove(Direction.UP);
+        } else if (input.isBomb()) {
+            createNewBombs(now);
         }
         input.clear();
     }
