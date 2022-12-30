@@ -22,7 +22,6 @@ public class Player extends GameObject implements Movable, TakeVisitor , WalkVis
     private int keys;
     private int range;
 
-    private Input input;
 
     public Player(Game game, Position position) {
         super(game, position);
