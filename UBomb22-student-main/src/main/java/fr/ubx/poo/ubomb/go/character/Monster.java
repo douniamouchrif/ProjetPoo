@@ -15,8 +15,6 @@ public class Monster extends GameObject implements Movable {
     private Direction direction;
     private long lastMove;
 
-    Timer time = new Timer(2000);
-
     //private int lives;
 
     public Monster(Game game, Position position) {
@@ -47,62 +45,19 @@ public class Monster extends GameObject implements Movable {
         setPosition(nextPos);
     }
 
-    /*public void update(long now) {
-        if (canMove(direction)) {
-            doMove(direction);
-            lastMove = now + 10 * 1000000000L / game.configuration().monsterVelocity();
-            if (now >= lastMove){
-                requestMove(Direction.random());
-                lastMove += (10 * 1000000000L / game.configuration().monsterVelocity());
-            }
-        } else {
-            direction = Direction.random();
-        }
-    }*/
-
     public void update(long now) {
-        time.start();
-        lastMove = now + 10 * 1000000000L / game.configuration().monsterVelocity();
-        if (time.isRunning()) {
-            if (canMove(direction)) {
-                doMove(direction);
-            } else {
-                direction = Direction.random();
-            }
-        }
-        System.out.println("time ...");
-        requestMove(Direction.random());
-        lastMove += 10 * 1000000000L / game.configuration().monsterVelocity();
-        time.update(now);
-    }
-
-    /*public void update(long now) {
-        lastMove = now + 10 * 1000000000L / game.configuration().monsterVelocity();
-        if (now < lastMove) {
-            if (canMove(direction)) {
-                doMove(direction);
-            } else {
-                direction = Direction.random();
-            }
-        }
-        System.out.println("time ...");
-        requestMove(Direction.random());
-        lastMove += 10 * 1000000000L / game.configuration().monsterVelocity();
-    }*/
-
-    /*public void update(long now) {
-        if (canMove(direction)) {
-            doMove(direction);
-            lastMove = now + 10 * 1000000000L / game.configuration().monsterVelocity();
             if (now >= lastMove){
-                System.out.println("time ...");
+                lastMove = now + 10 * 1000000000L / game.configuration().monsterVelocity();
                 requestMove(Direction.random());
-                lastMove += (10 * 1000000000L / game.configuration().monsterVelocity());
+                if (canMove(direction)) {
+                    doMove(direction);
+                    lastMove += (10 * 1000000000L / game.configuration().monsterVelocity());
+                }
+                else {
+                    direction = Direction.random();
+                }
             }
-        } else {
-            direction = Direction.random();
-        }
-    }*/
+    }
 
     public void requestMove(Direction direction) {
         if (direction != this.direction) {
