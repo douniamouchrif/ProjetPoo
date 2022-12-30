@@ -179,13 +179,9 @@ public final class GameEngine {
 
 
     private void update(long now) {
-        //timer.start();
         monster.update(now);
         player.update(now);
 
-        //Timer timer = new Timer();
-        //timer.schedule(monster.update(now), 2000);
-        //timer.update(now);
         if (player.getLives() == 0) {
             gameLoop.stop();
             showMessage("Perdu!", Color.RED);
