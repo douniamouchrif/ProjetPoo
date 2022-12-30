@@ -65,4 +65,7 @@ public class Monster extends GameObject implements Movable {
             setModified(true);
         }
     }
+
+    public void explode() {
+    }
 }
