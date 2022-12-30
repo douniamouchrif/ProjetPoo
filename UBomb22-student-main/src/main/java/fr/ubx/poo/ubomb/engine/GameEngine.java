@@ -48,6 +48,8 @@ public final class GameEngine {
     private Pane layer;
     private Input input;
 
+    private long invTime;
+
 
     public GameEngine(Game game, final Stage stage) {
         this.stage = stage;
@@ -133,12 +135,12 @@ public final class GameEngine {
 
     private void checkCollision(long now) {
         if (game.player().getPosition().x() == game.monster().getPosition().x() && game.player().getPosition().y() == game.monster().getPosition().y()){
-            System.out.println("Monster ...");
-            game.player().setLives(game.player().getLives()-1);
-            //game.configuration().playerInvisibilityTime();
-            update(now);
+            if(now>=invTime){
+                game.player().setLives(game.player().getLives()-1);
+                System.out.println("Monster ...");
+            }
+            invTime = now + game.configuration().playerInvisibilityTime()*1000000;
         }
-        update(now);
         // Check a collision between a monster and the player
     }
 
