@@ -32,8 +32,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
-import java.util.Timer;
-import java.util.TimerTask;
+//import java.util.Timer;
+//import java.util.TimerTask;
 
 
 public final class GameEngine {
@@ -48,9 +48,8 @@ public final class GameEngine {
     private StatusBar statusBar;
     private Pane layer;
     private Input input;
-    private Bomb bomb;
-
     private long invTime;
+    //private final Timer timer = new Timer(1000);
 
 
     public GameEngine(Game game, final Stage stage) {
@@ -100,6 +99,7 @@ public final class GameEngine {
 
                 // Do actions
                 update(now);
+
                 //createNewBombs(now);
                 checkCollision(now);
                 checkExplosions();
@@ -130,7 +130,7 @@ public final class GameEngine {
         tt.play();
     }
 
-    private void createNewBombs(long now) {
+    /*private void createNewBombs(long now) {
         // Create a new Bomb is needed
 
         //if(input.isBomb()) {
@@ -146,14 +146,43 @@ public final class GameEngine {
                     System.out.println("Bomb remove...");
                     i--;
                     nextStatu += 10000000000L;
-                    game.grid().remove(b2.getPosition());
+                    now += 10000000000L;
+                    //game.grid().remove(b2.getPosition());
                     //b2.remove();
                     //System.out.println("Bomb ...");
                 }
+                game.grid().remove(b2.getPosition());
+
             }
             b2.setStatus(0);
             sprites.add(new SpriteBomb(layer, b2));
         //}
+    }*/
+
+    private void createNewBombs(long now) {
+        // Create a new Bomb is needed
+        int i = 3;
+        Bomb b2 = new Bomb(player.getPosition());
+        while (i >= 1) {
+            System.out.println("Bomb ...");
+            b2.setStatus(i);
+            Timer timer = new Timer(1000000);
+            timer.start();
+            //sprites.add(new SpriteBomb(layer, b2));
+            //timer.update(now);
+            while (timer.isRunning()) {
+                sprites.add(new SpriteBomb(layer, b2));
+                now += timer.remaining();
+                timer.update(now);
+                System.out.println("time...");
+
+            }
+            System.out.println("Bomb remove...");
+            i--;
+            game.grid().remove(b2.getPosition());
+        }
+        b2.setStatus(0);
+        sprites.add(new SpriteBomb(layer, b2));
     }
 
     /*if (now >= nextStatu){
