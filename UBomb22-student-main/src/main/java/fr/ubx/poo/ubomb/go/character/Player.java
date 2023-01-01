@@ -114,6 +114,9 @@ public class Player extends GameObject implements Movable, TakeVisitor , WalkVis
     public void setLives(int lives) {
         this.lives = lives;
     }
+    public void setAvailableBombs(int availableBombs) {
+        this.availableBombs = availableBombs;
+    }
 
     public Direction getDirection() {
         return direction;
