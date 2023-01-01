@@ -12,6 +12,8 @@ import fr.ubx.poo.ubomb.go.character.Player;
 import fr.ubx.poo.ubomb.go.decor.bonus.Bomb;
 import fr.ubx.poo.ubomb.view.*;
 import javafx.animation.AnimationTimer;
+import javafx.animation.PauseTransition;
+import javafx.animation.SequentialTransition;
 import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
 import javafx.scene.Group;
@@ -102,7 +104,7 @@ public final class GameEngine {
 
                 //createNewBombs(now);
                 checkCollision(now);
-                checkExplosions();
+                //checkExplosions();
 
                 // Graphic update
                 cleanupSprites();
@@ -112,8 +114,15 @@ public final class GameEngine {
         };
     }
 
-    private void checkExplosions() {
+    private void checkExplosions(Bomb b2) {
         // Check explosions of bombs
+
+        animateExplosion(b2.getPosition(), new Position(b2.getPosition().x()+player.getRange(),b2.getPosition().y()));
+        animateExplosion(b2.getPosition(), new Position(b2.getPosition().x(),b2.getPosition().y()+player.getRange()));
+        animateExplosion(b2.getPosition(), new Position(b2.getPosition().x()-player.getRange(),b2.getPosition().y()));
+        animateExplosion(b2.getPosition(), new Position(b2.getPosition().x(),b2.getPosition().y()-player.getRange()));
+        //appel des explodes
+        player.setAvailableBombs(player.getAvailableBombs()+1);
     }
 
     private void animateExplosion(Position src, Position dst) {
@@ -130,49 +139,20 @@ public final class GameEngine {
         tt.play();
     }
 
-    /*private void createNewBombs(long now) {
-        // Create a new Bomb is needed
-
-        //if(input.isBomb()) {
-            //layer.getChildren().add(explosion);
-            int i = 3;
-            long nextStatu = now + 10000000000L;
-            Bomb b2 = new Bomb(player.getPosition());
-            while (i >= 1) {
-                System.out.println("Bomb ...");
-                b2.setStatus(i);
-                sprites.add(new SpriteBomb(layer, b2));
-                if (nextStatu >= now) {
-                    System.out.println("Bomb remove...");
-                    i--;
-                    nextStatu += 10000000000L;
-                    now += 10000000000L;
-                    //game.grid().remove(b2.getPosition());
-                    //b2.remove();
-                    //System.out.println("Bomb ...");
-                }
-                game.grid().remove(b2.getPosition());
-
-            }
-            b2.setStatus(0);
-            sprites.add(new SpriteBomb(layer, b2));
-        //}
-    }*/
-
-    private void createNewBombs(long now) {
+    /*private void createNewBombs(long now, Bomb b2) {
         // Create a new Bomb is needed
         int i = 3;
-        Bomb b2 = new Bomb(player.getPosition());
+        //Bomb b2 = new Bomb(player.getPosition());
         while (i >= 1) {
             System.out.println("Bomb ...");
             b2.setStatus(i);
-            Timer timer = new Timer(1000000);
+            Timer timer = new Timer(1000);
             timer.start();
             //sprites.add(new SpriteBomb(layer, b2));
             //timer.update(now);
             while (timer.isRunning()) {
                 sprites.add(new SpriteBomb(layer, b2));
-                now += timer.remaining();
+                now += 10000000000L;
                 timer.update(now);
                 System.out.println("time...");
 
@@ -181,23 +161,67 @@ public final class GameEngine {
             i--;
             game.grid().remove(b2.getPosition());
         }
+        //Bomb b2 = new Bomb(player.getPosition());
         b2.setStatus(0);
         sprites.add(new SpriteBomb(layer, b2));
-    }
-
-    /*if (now >= nextStatu){
-        nextStatu = now + 1000000000L;
-        while (i >= 1) {
-            System.out.println("Bomb ...");
-            b2.setStatus(i);
-            sprites.add(new SpriteBomb(layer, b2));
-        }
-        System.out.println("Bomb remove...");
-        i--;
-        nextStatu += 10000000000L;
-        game.grid().remove(b2.getPosition());
     }*/
 
+    private void createNewBombs(long now) {
+
+        ImageView bomb3 = new ImageView(ImageResourceFactory.getBomb(3).getImage());
+        TranslateTransition tt33 = new TranslateTransition(Duration.millis(0), bomb3);
+        tt33.setToX(player.getPosition().x() * Sprite.size);
+        tt33.setToY(player.getPosition().y() * Sprite.size);
+        tt33.setOnFinished(e -> {
+            layer.getChildren().add(bomb3);
+        });
+        TranslateTransition tt3 = new TranslateTransition(Duration.millis(1000), bomb3);
+        tt3.setToX(player.getPosition().x() * Sprite.size);
+        tt3.setToY(player.getPosition().y() * Sprite.size);
+        tt3.setOnFinished(e -> {
+            layer.getChildren().remove(bomb3);
+        });
+
+        ImageView bomb2 = new ImageView(ImageResourceFactory.getBomb(2).getImage());
+        TranslateTransition tt22 = new TranslateTransition(Duration.millis(0), bomb2);
+        tt22.setToX(player.getPosition().x() * Sprite.size);
+        tt22.setToY(player.getPosition().y() * Sprite.size);
+        tt22.setOnFinished(e -> {
+            layer.getChildren().add(bomb2);
+        });
+        TranslateTransition tt2 = new TranslateTransition(Duration.millis(1000), bomb2);
+        tt2.setToX(player.getPosition().x() * Sprite.size);
+        tt2.setToY(player.getPosition().y() * Sprite.size);
+        tt2.setOnFinished(e -> {
+            layer.getChildren().remove(bomb2);
+        });
+
+        ImageView bomb1 = new ImageView(ImageResourceFactory.getBomb(1).getImage());
+        TranslateTransition tt11 = new TranslateTransition(Duration.millis(0), bomb1);
+        tt11.setToX(player.getPosition().x() * Sprite.size);
+        tt11.setToY(player.getPosition().y() * Sprite.size);
+        tt11.setOnFinished(e -> {
+            layer.getChildren().add(bomb1);
+        });
+        TranslateTransition tt1 = new TranslateTransition(Duration.millis(1000), bomb1);
+        tt1.setToX(player.getPosition().x() * Sprite.size);
+        tt1.setToY(player.getPosition().y() * Sprite.size);
+        tt1.setOnFinished(e -> {
+            layer.getChildren().remove(bomb1);
+        });
+
+        ImageView bomb0 = new ImageView(ImageResourceFactory.getBomb(0).getImage());
+        TranslateTransition tt00 = new TranslateTransition(Duration.millis(1), bomb0);
+        tt00.setToX(player.getPosition().x() * Sprite.size);
+        tt00.setToY(player.getPosition().y() * Sprite.size);
+        tt00.setOnFinished(e -> {
+            layer.getChildren().add(bomb0);
+        });
+
+        SequentialTransition seq = new SequentialTransition(tt33 ,tt3,tt22,tt2,tt11, tt1, tt00);
+        seq.play();
+
+    }
 
     private void checkCollision(long now) {
         if (game.player().getPosition().x() == game.monster().getPosition().x() && game.player().getPosition().y() == game.monster().getPosition().y()){
@@ -224,7 +248,10 @@ public final class GameEngine {
         } else if (input.isMoveUp()) {
             player.requestMove(Direction.UP);
         } else if (input.isBomb()) {
+            player.setAvailableBombs(player.getAvailableBombs()-1);
+            Bomb b2 = new Bomb(player.getPosition());
             createNewBombs(now);
+            checkExplosions(b2);
         }
         input.clear();
     }
