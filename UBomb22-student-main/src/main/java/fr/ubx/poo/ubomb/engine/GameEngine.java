@@ -114,15 +114,24 @@ public final class GameEngine {
         };
     }
 
-    private void checkExplosions(Bomb b2) {
+    private void checkExplosions() {
         // Check explosions of bombs
-
-        animateExplosion(b2.getPosition(), new Position(b2.getPosition().x()+player.getRange(),b2.getPosition().y()));
-        animateExplosion(b2.getPosition(), new Position(b2.getPosition().x(),b2.getPosition().y()+player.getRange()));
-        animateExplosion(b2.getPosition(), new Position(b2.getPosition().x()-player.getRange(),b2.getPosition().y()));
-        animateExplosion(b2.getPosition(), new Position(b2.getPosition().x(),b2.getPosition().y()-player.getRange()));
+        for (int i = 0; i<game.grid().width(); i++){
+            for (int j = 0; j<game.grid().height(); j++){
+                if (game.grid().get(new Position(i,j)) instanceof Bomb bomb){
+                    if (bomb.getStatus() == 0){
+                        game.grid().remove(bomb.getPosition());
+                        animateExplosion(bomb.getPosition(), new Position(bomb.getPosition().x()+player.getRange(),bomb.getPosition().y()));
+                        animateExplosion(bomb.getPosition(), new Position(bomb.getPosition().x(),bomb.getPosition().y()+player.getRange()));
+                        animateExplosion(bomb.getPosition(), new Position(bomb.getPosition().x()-player.getRange(),bomb.getPosition().y()));
+                        animateExplosion(bomb.getPosition(), new Position(bomb.getPosition().x(),bomb.getPosition().y()-player.getRange()));
+                        bomb.remove();
+                        player.setAvailableBombs(player.getAvailableBombs()+1);
+                    }
+                }
+            }
+        }
         //appel des explodes
-        player.setAvailableBombs(player.getAvailableBombs()+1);
     }
 
     private void animateExplosion(Position src, Position dst) {
@@ -139,34 +148,8 @@ public final class GameEngine {
         tt.play();
     }
 
-    /*private void createNewBombs(long now, Bomb b2) {
-        // Create a new Bomb is needed
-        int i = 3;
-        //Bomb b2 = new Bomb(player.getPosition());
-        while (i >= 1) {
-            System.out.println("Bomb ...");
-            b2.setStatus(i);
-            Timer timer = new Timer(1000);
-            timer.start();
-            //sprites.add(new SpriteBomb(layer, b2));
-            //timer.update(now);
-            while (timer.isRunning()) {
-                sprites.add(new SpriteBomb(layer, b2));
-                now += 10000000000L;
-                timer.update(now);
-                System.out.println("time...");
-
-            }
-            System.out.println("Bomb remove...");
-            i--;
-            game.grid().remove(b2.getPosition());
-        }
-        //Bomb b2 = new Bomb(player.getPosition());
-        b2.setStatus(0);
-        sprites.add(new SpriteBomb(layer, b2));
-    }*/
-
     private void createNewBombs(long now) {
+        Bomb b = new Bomb(new Position(player.getPosition()));
 
         ImageView bomb3 = new ImageView(ImageResourceFactory.getBomb(3).getImage());
         TranslateTransition tt33 = new TranslateTransition(Duration.millis(0), bomb3);
@@ -211,16 +194,24 @@ public final class GameEngine {
         });
 
         ImageView bomb0 = new ImageView(ImageResourceFactory.getBomb(0).getImage());
-        TranslateTransition tt00 = new TranslateTransition(Duration.millis(1), bomb0);
+        TranslateTransition tt00 = new TranslateTransition(Duration.millis(0), bomb0);
         tt00.setToX(player.getPosition().x() * Sprite.size);
         tt00.setToY(player.getPosition().y() * Sprite.size);
         tt00.setOnFinished(e -> {
             layer.getChildren().add(bomb0);
         });
+        TranslateTransition tt0 = new TranslateTransition(Duration.millis(1000), bomb0);
+        tt0.setToX(player.getPosition().x() * Sprite.size);
+        tt0.setToY(player.getPosition().y() * Sprite.size);
+        tt0.setOnFinished(e -> {
+            layer.getChildren().remove(bomb0);
+            b.setStatus(0);
+            game.grid().set(b.getPosition(), b);
+            checkExplosions();
+        });
 
-        SequentialTransition seq = new SequentialTransition(tt33 ,tt3,tt22,tt2,tt11, tt1, tt00);
+        SequentialTransition seq = new SequentialTransition(tt33, tt3, tt22, tt2, tt11, tt1, tt00, tt0);
         seq.play();
-
     }
 
     private void checkCollision(long now) {
@@ -248,10 +239,10 @@ public final class GameEngine {
         } else if (input.isMoveUp()) {
             player.requestMove(Direction.UP);
         } else if (input.isBomb()) {
-            player.setAvailableBombs(player.getAvailableBombs()-1);
-            Bomb b2 = new Bomb(player.getPosition());
-            createNewBombs(now);
-            checkExplosions(b2);
+            if (player.getAvailableBombs() > 0) {
+                player.setAvailableBombs(player.getAvailableBombs() - 1);
+                createNewBombs(now);
+            }
         }
         input.clear();
     }
