@@ -48,7 +48,7 @@ public final class GameEngine {
     private static AnimationTimer gameLoop;
     private final Game game;
     private final Player player;
-    private final Monster monster;
+    private final Monster[] monster;
     private final List<Sprite> sprites = new LinkedList<>();
     private final Set<Sprite> cleanUpSprites = new HashSet<>();
     private final Stage stage;
@@ -94,7 +94,9 @@ public final class GameEngine {
         }
 
         sprites.add(new SpritePlayer(layer, player));
-        sprites.add(new SpriteMonster(layer, monster));
+        for (int i = 0; i < monster.length; i++){
+            sprites.add(new SpriteMonster(layer, monster[i]));
+        }
     }
 
     void buildAndSetGameLoop() {
@@ -131,9 +133,6 @@ public final class GameEngine {
                         animateExplosion(bomb.getPosition(), new Position(bomb.getPosition().x(),bomb.getPosition().y()-player.getRange()));
                         int x = 0;
                         boolean removedU =false, removedD = false, removedL = false, removedR = false;
-                        boolean treeU = false, treeD = false, treeL = false, treeR = false;
-                        boolean stoneU = false, stoneD = false, stoneL = false, stoneR = false;
-
                         while (x <= player.getRange()){
                             if (game.grid().get(new Position(i+x,j)) instanceof Bonus bonus && !removedR){
                                 bonus.explode();
@@ -159,18 +158,21 @@ public final class GameEngine {
                             if (player.getPosition().x() == i && player.getPosition().y() == j-x){
                                 player.explode();
                             }
-                            if (monster.getPosition().x() == i+x && monster.getPosition().y() == j){
-                                monster.explode();
+                            for (int y = 0; y < monster.length; y++){
+                                if (monster[y].getPosition().x() == i+x && monster[y].getPosition().y() == j){
+                                    monster[y].explode();
+                                }
+                                if (monster[y].getPosition().x() == i && monster[].getPosition().y() == j+x){
+                                    monster.explode();
+                                }
+                                if (monster.getPosition().x() == i-x && monster.getPosition().y() == j){
+                                    monster.explode();
+                                }
+                                if (monster.getPosition().x() == i && monster.getPosition().y() == j-x){
+                                    monster.explode();
+                                }
                             }
-                            if (monster.getPosition().x() == i && monster.getPosition().y() == j+x){
-                                monster.explode();
-                            }
-                            if (monster.getPosition().x() == i-x && monster.getPosition().y() == j){
-                                monster.explode();
-                            }
-                            if (monster.getPosition().x() == i && monster.getPosition().y() == j-x){
-                                monster.explode();
-                            }
+                            
                             if (game.grid().get(new Position(i+x,j)) instanceof Box box && !removedR){
                                 box.explode();
                                 removedR = true;
@@ -227,7 +229,6 @@ public final class GameEngine {
                 }
             }
         }
-        //appel des explodes
     }
 
     private void animateExplosion(Position src, Position dst) {
