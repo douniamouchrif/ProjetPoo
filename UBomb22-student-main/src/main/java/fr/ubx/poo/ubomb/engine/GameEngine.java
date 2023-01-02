@@ -163,13 +163,13 @@ public final class GameEngine {
                                     monster[y].explode();
                                 }
                                 if (monster[y].getPosition().x() == i && monster[y].getPosition().y() == j+x){
-                                    monster.explode();
+                                    monster[y].explode();
                                 }
-                                if (monster.getPosition().x() == i-x && monster.getPosition().y() == j){
-                                    monster.explode();
+                                if (monster[y].getPosition().x() == i-x && monster[y].getPosition().y() == j){
+                                    monster[y].explode();
                                 }
-                                if (monster.getPosition().x() == i && monster.getPosition().y() == j-x){
-                                    monster.explode();
+                                if (monster[y].getPosition().x() == i && monster[y].getPosition().y() == j-x){
+                                    monster[y].explode();
                                 }
                             }
                             
@@ -313,11 +313,13 @@ public final class GameEngine {
     }
 
     private void checkCollision(long now) {
-        if (game.player().getPosition().x() == game.monster().getPosition().x() && game.player().getPosition().y() == game.monster().getPosition().y()){
-            if(now>=invTime){
-                game.player().setLives(game.player().getLives()-1);
-                System.out.println("Monster ...");
-                invTime = now + game.configuration().playerInvisibilityTime()*1000000;
+        for(int i=0; i< monster.length;i++){
+            if (game.player().getPosition().x() == game.monster()[i].getPosition().x() && game.player().getPosition().y() == game.monster()[i].getPosition().y()){
+                if(now>=invTime){
+                    game.player().setLives(game.player().getLives()-1);
+                    System.out.println("Monster ...");
+                    invTime = now + game.configuration().playerInvisibilityTime()*1000000;
+                }
             }
         }
         // Check a collision between a monster and the player
@@ -365,7 +367,9 @@ public final class GameEngine {
 
 
     private void update(long now) {
-        monster.update(now);
+        for(int i=0; i< monster.length;i++){
+            monster[i].update(now);
+        }
         player.update(now);
 
         if (player.getLives() <= 0) {
