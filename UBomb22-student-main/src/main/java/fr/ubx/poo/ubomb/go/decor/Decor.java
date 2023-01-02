@@ -18,11 +18,11 @@ public abstract class Decor extends GameObject implements Movable{
         super(position);
     }
 
-    /*@Override
-    public boolean walkableBy(Player player){
-        return player.walk(this);
-    }*/
     abstract public boolean canMove(Direction direction);
     abstract public void doMove(Direction direction);
+
+    @Override
+    public void explode() {
+    }
 
 }
