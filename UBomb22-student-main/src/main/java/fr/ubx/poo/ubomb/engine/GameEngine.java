@@ -10,6 +10,7 @@ import fr.ubx.poo.ubomb.game.Position;
 import fr.ubx.poo.ubomb.go.character.Monster;
 import fr.ubx.poo.ubomb.go.character.Player;
 import fr.ubx.poo.ubomb.go.decor.bonus.Bomb;
+import fr.ubx.poo.ubomb.go.decor.bonus.Bonus;
 import fr.ubx.poo.ubomb.view.*;
 import javafx.animation.AnimationTimer;
 import javafx.animation.PauseTransition;
@@ -125,6 +126,34 @@ public final class GameEngine {
                         animateExplosion(bomb.getPosition(), new Position(bomb.getPosition().x(),bomb.getPosition().y()+player.getRange()));
                         animateExplosion(bomb.getPosition(), new Position(bomb.getPosition().x()-player.getRange(),bomb.getPosition().y()));
                         animateExplosion(bomb.getPosition(), new Position(bomb.getPosition().x(),bomb.getPosition().y()-player.getRange()));
+                        int x = 0;
+                        while (x <= player.getRange()){
+                            if (game.grid().get(new Position(i+x,j)) instanceof Bonus bonus){
+                                bonus.explode();
+                            }
+                            if (game.grid().get(new Position(i,j+x)) instanceof Bonus bonus){
+                                bonus.explode();
+                            }
+                            if (game.grid().get(new Position(i-x,j)) instanceof Bonus bonus){
+                                bonus.explode();
+                            }
+                            if (game.grid().get(new Position(i,j-x)) instanceof Bonus bonus){
+                                bonus.explode();
+                            }
+                            if (player.getPosition().x() == i+x && player.getPosition().y() == j){
+                                player.explode();
+                            }
+                            if (player.getPosition().x() == i && player.getPosition().y() == j+x){
+                                player.explode();
+                            }
+                            if (player.getPosition().x() == i-x && player.getPosition().y() == j){
+                                player.explode();
+                            }
+                            if (player.getPosition().x() == i && player.getPosition().y() == j-x){
+                                player.explode();
+                            }
+                            x++;
+                        }
                         bomb.remove();
                         player.setAvailableBombs(player.getAvailableBombs()+1);
                     }
