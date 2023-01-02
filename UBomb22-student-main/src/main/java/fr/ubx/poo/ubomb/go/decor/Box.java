@@ -41,4 +41,8 @@ public class Box extends Decor  {
         setPosition(nextPos);
     }
 
+    @Override
+    public void explode() {
+        remove();
+    }
 }
