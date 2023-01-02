@@ -1,6 +1,7 @@
 package fr.ubx.poo.ubomb.game;
 
 
+import fr.ubx.poo.ubomb.go.GameObject;
 import fr.ubx.poo.ubomb.go.decor.Decor;
 
 import java.util.*;
