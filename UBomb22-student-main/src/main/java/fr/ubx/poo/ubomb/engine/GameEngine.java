@@ -9,6 +9,10 @@ import fr.ubx.poo.ubomb.game.Game;
 import fr.ubx.poo.ubomb.game.Position;
 import fr.ubx.poo.ubomb.go.character.Monster;
 import fr.ubx.poo.ubomb.go.character.Player;
+import fr.ubx.poo.ubomb.go.decor.Box;
+import fr.ubx.poo.ubomb.go.decor.Princess;
+import fr.ubx.poo.ubomb.go.decor.Stone;
+import fr.ubx.poo.ubomb.go.decor.Tree;
 import fr.ubx.poo.ubomb.go.decor.bonus.Bomb;
 import fr.ubx.poo.ubomb.go.decor.bonus.Bonus;
 import fr.ubx.poo.ubomb.view.*;
@@ -52,7 +56,6 @@ public final class GameEngine {
     private Pane layer;
     private Input input;
     private long invTime;
-    //private final Timer timer = new Timer(1000);
 
 
     public GameEngine(Game game, final Stage stage) {
@@ -127,17 +130,21 @@ public final class GameEngine {
                         animateExplosion(bomb.getPosition(), new Position(bomb.getPosition().x()-player.getRange(),bomb.getPosition().y()));
                         animateExplosion(bomb.getPosition(), new Position(bomb.getPosition().x(),bomb.getPosition().y()-player.getRange()));
                         int x = 0;
+                        boolean removedU =false, removedD = false, removedL = false, removedR = false;
+                        boolean treeU = false, treeD = false, treeL = false, treeR = false;
+                        boolean stoneU = false, stoneD = false, stoneL = false, stoneR = false;
+
                         while (x <= player.getRange()){
-                            if (game.grid().get(new Position(i+x,j)) instanceof Bonus bonus){
+                            if (game.grid().get(new Position(i+x,j)) instanceof Bonus bonus && !removedR){
                                 bonus.explode();
                             }
-                            if (game.grid().get(new Position(i,j+x)) instanceof Bonus bonus){
+                            if (game.grid().get(new Position(i,j+x)) instanceof Bonus bonus && !removedU){
                                 bonus.explode();
                             }
-                            if (game.grid().get(new Position(i-x,j)) instanceof Bonus bonus){
+                            if (game.grid().get(new Position(i-x,j)) instanceof Bonus bonus && !removedL){
                                 bonus.explode();
                             }
-                            if (game.grid().get(new Position(i,j-x)) instanceof Bonus bonus){
+                            if (game.grid().get(new Position(i,j-x)) instanceof Bonus bonus && !removedD){
                                 bonus.explode();
                             }
                             if (player.getPosition().x() == i+x && player.getPosition().y() == j){
@@ -155,14 +162,62 @@ public final class GameEngine {
                             if (monster.getPosition().x() == i+x && monster.getPosition().y() == j){
                                 monster.explode();
                             }
-                            if (monster.getPosition().x() == i && player.getPosition().y() == j+x){
-                                player.explode();
+                            if (monster.getPosition().x() == i && monster.getPosition().y() == j+x){
+                                monster.explode();
                             }
-                            if (player.getPosition().x() == i-x && player.getPosition().y() == j){
-                                player.explode();
+                            if (monster.getPosition().x() == i-x && monster.getPosition().y() == j){
+                                monster.explode();
                             }
-                            if (player.getPosition().x() == i && player.getPosition().y() == j-x){
-                                player.explode();
+                            if (monster.getPosition().x() == i && monster.getPosition().y() == j-x){
+                                monster.explode();
+                            }
+                            if (game.grid().get(new Position(i+x,j)) instanceof Box box && !removedR){
+                                box.explode();
+                                removedR = true;
+                            }
+                            if (game.grid().get(new Position(i,j+x)) instanceof Box box && !removedU){
+                                box.explode();
+                                removedU = true;
+                            }
+                            if (game.grid().get(new Position(i-x,j)) instanceof Box box && !removedL){
+                                box.explode();
+                                removedL = true;
+                            }
+                            if (game.grid().get(new Position(i,j-x)) instanceof Box box && !removedD){
+                                box.explode();
+                                removedD = true;
+                            }
+                            if (game.grid().get(new Position(i+x,j)) instanceof Tree tree && !removedR){
+                                tree.explode();
+                                removedR = true;
+                            }
+                            if (game.grid().get(new Position(i,j+x)) instanceof Tree tree && !removedU){
+                                tree.explode();
+                                removedU = true;
+                            }
+                            if (game.grid().get(new Position(i-x,j)) instanceof Tree tree && !removedL){
+                                tree.explode();
+                                removedL = true;
+                            }
+                            if (game.grid().get(new Position(i,j-x)) instanceof Tree tree && !removedD){
+                                tree.explode();
+                                removedD = true;
+                            }
+                            if (game.grid().get(new Position(i+x,j)) instanceof Stone stone && !removedR){
+                                stone.explode();
+                                removedR = true;
+                            }
+                            if (game.grid().get(new Position(i,j+x)) instanceof Stone stone && !removedU){
+                                stone.explode();
+                                removedU = true;
+                            }
+                            if (game.grid().get(new Position(i-x,j)) instanceof Stone stone && !removedL){
+                                stone.explode();
+                                removedL = true;
+                            }
+                            if (game.grid().get(new Position(i,j-x)) instanceof Stone stone && !removedD){
+                                stone.explode();
+                                removedD = true;
                             }
                             x++;
                         }
@@ -249,6 +304,7 @@ public final class GameEngine {
             b.setStatus(0);
             game.grid().set(b.getPosition(), b);
             checkExplosions();
+            update(now);
         });
 
         SequentialTransition seq = new SequentialTransition(tt33, tt3, tt22, tt2, tt11, tt1, tt00, tt0);
@@ -311,9 +367,13 @@ public final class GameEngine {
         monster.update(now);
         player.update(now);
 
-        if (player.getLives() == 0) {
+        if (player.getLives() <= 0) {
             gameLoop.stop();
             showMessage("Perdu!", Color.RED);
+        }
+        if (game.grid().get(player.getPosition()) instanceof Princess) {
+            gameLoop.stop();
+            showMessage("! BRAVO !", Color.LIGHTSALMON);
         }
     }
 
