@@ -64,9 +64,11 @@ public class Player extends GameObject implements Movable, TakeVisitor , WalkVis
     }
     @Override
     public void take(BombRangeDec bombrangedec) {
-        System.out.println("Take the bombrangedec ...");
-        bombrangedec.remove();
-        this.range = this.range-1;
+        if(this.range > 1){
+            this.range = this.range-1;
+            System.out.println("Take the bombrangedec ...");
+            bombrangedec.remove();
+        }
     }
     @Override
     public boolean walk(Box box) {
