@@ -26,6 +26,9 @@ public class Princess extends Decor {
     }
     @Override
     public void doMove(Direction direction){
+    }
 
+    @Override
+    public void explode() {
     }
 }
