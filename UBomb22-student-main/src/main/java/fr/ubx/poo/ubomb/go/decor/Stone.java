@@ -15,6 +15,10 @@ public class Stone extends Decor {
         return false;
     }
     public void doMove(Direction direction){
+    }
+
+    @Override
+    public void explode() {
 
     }
 }
