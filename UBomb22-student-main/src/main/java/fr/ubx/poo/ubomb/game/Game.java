@@ -11,14 +11,18 @@ public class Game {
 
     private final Configuration configuration;
     private final Player player;
-    private final Monster monster;
     private final Grid grid;
+    private final Monster[] monster;
 
     public Game(Configuration configuration, Grid grid) {
         this.configuration = configuration;
         this.grid = grid;
         player = new Player(this, configuration.playerPosition());
-        monster = new Monster(this, configuration.monsterPosition());
+        monster = new Monster[configuration.monsterPosition().length];
+        for (int i=0; i < configuration.monsterPosition().length; i++){
+            monster[i] = new Monster(this, configuration.monsterPosition()[i]);
+        }
+        //monster = new Monster(this, configuration.monsterPosition());
     }
 
     public Configuration configuration() {
@@ -30,8 +34,10 @@ public class Game {
         List<GameObject> gos = new LinkedList<>();
         if (player().getPosition().equals(position))
             gos.add(player);
-        if (monster().getPosition().equals(position))
-            gos.add(monster);
+        for(int i = 0; i< configuration.monsterPosition().length; i++){
+            if (monster()[i].getPosition().equals(position))
+                gos.add(monster[i]);
+        }
         return gos;
     }
 
@@ -43,7 +49,7 @@ public class Game {
         return this.player;
     }
 
-    public Monster monster() {
+    public Monster[] monster() {
         return this.monster;
     }
 
