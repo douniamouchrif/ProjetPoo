@@ -155,7 +155,7 @@ public final class GameEngine {
                             if (monster.getPosition().x() == i+x && monster.getPosition().y() == j){
                                 monster.explode();
                             }
-                            if (player.getPosition().x() == i && player.getPosition().y() == j+x){
+                            if (monster.getPosition().x() == i && player.getPosition().y() == j+x){
                                 player.explode();
                             }
                             if (player.getPosition().x() == i-x && player.getPosition().y() == j){
