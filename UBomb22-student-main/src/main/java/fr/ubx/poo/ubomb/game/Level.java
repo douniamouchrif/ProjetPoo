@@ -1,5 +1,6 @@
 package fr.ubx.poo.ubomb.game;
 
+import fr.ubx.poo.ubomb.go.GameObject;
 import fr.ubx.poo.ubomb.go.character.Monster;
 import fr.ubx.poo.ubomb.go.decor.bonus.*;
 import fr.ubx.poo.ubomb.go.decor.*;
@@ -15,7 +16,6 @@ public class Level implements Grid {
     private final int height;
 
     private final MapLevel entities;
-
 
     private final Map<Position, Decor> elements = new HashMap<>();
 
@@ -59,6 +59,9 @@ public class Level implements Grid {
                     case BombRangeDec:
                         elements.put(position, new BombRangeDec(position));
                         break;
+                    /*case Monster:
+                        elements.put(position, new Monster(position));
+                        break;*/
                     case Empty: break;
                     default:
                         throw new RuntimeException("EntityCode " + entity.name() + " not processed");
