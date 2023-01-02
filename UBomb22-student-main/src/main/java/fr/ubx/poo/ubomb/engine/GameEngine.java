@@ -152,6 +152,18 @@ public final class GameEngine {
                             if (player.getPosition().x() == i && player.getPosition().y() == j-x){
                                 player.explode();
                             }
+                            if (monster.getPosition().x() == i+x && monster.getPosition().y() == j){
+                                monster.explode();
+                            }
+                            if (player.getPosition().x() == i && player.getPosition().y() == j+x){
+                                player.explode();
+                            }
+                            if (player.getPosition().x() == i-x && player.getPosition().y() == j){
+                                player.explode();
+                            }
+                            if (player.getPosition().x() == i && player.getPosition().y() == j-x){
+                                player.explode();
+                            }
                             x++;
                         }
                         bomb.remove();
