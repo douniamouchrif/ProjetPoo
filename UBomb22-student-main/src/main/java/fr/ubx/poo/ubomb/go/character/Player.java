@@ -155,6 +155,6 @@ public class Player extends GameObject implements Movable, TakeVisitor , WalkVis
 
     @Override
     public void explode() {
-        // TODO
+        setLives(getLives()-1);
     }
 }
