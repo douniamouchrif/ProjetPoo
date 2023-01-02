@@ -162,7 +162,7 @@ public final class GameEngine {
                                 if (monster[y].getPosition().x() == i+x && monster[y].getPosition().y() == j){
                                     monster[y].explode();
                                 }
-                                if (monster[y].getPosition().x() == i && monster[].getPosition().y() == j+x){
+                                if (monster[y].getPosition().x() == i && monster[y].getPosition().y() == j+x){
                                     monster.explode();
                                 }
                                 if (monster.getPosition().x() == i-x && monster.getPosition().y() == j){
