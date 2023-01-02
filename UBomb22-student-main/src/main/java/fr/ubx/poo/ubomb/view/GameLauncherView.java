@@ -7,6 +7,7 @@ import fr.ubx.poo.ubomb.launcher.MapLevel;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
@@ -16,6 +17,8 @@ import java.io.*;
 
 public class GameLauncherView extends BorderPane {
     private final FileChooser fileChooser = new FileChooser();
+    //private final GameLauncher gamelauncher = new GameLauncher();
+    //private MapLevel mapLevel = new MapLevel(0, 0);
 
     public GameLauncherView(Stage stage)  {
         // Create menu
@@ -45,6 +48,14 @@ public class GameLauncherView extends BorderPane {
             File file = fileChooser.showOpenDialog(stage);
             if (file != null) {
                 // TODO
+                /*Game game = null;
+                try {
+                    game = gamelauncher.load(file);
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
+                GameEngine engine = new GameEngine(game, stage);
+                engine.start();*/
                 System.err.println("[TODO] Not implemented");
             }
         });
@@ -60,6 +71,14 @@ public class GameLauncherView extends BorderPane {
         exitItem.setOnAction(e -> System.exit(0));
 
     }
+
+    /*private void updateMapLevel(MapLevel mapLevel) {
+        if (mapLevel != null) {
+            Pane gridView = new GridView(grid, pickerView);
+            this.setCenter(gridView);
+            stage.sizeToScene();
+        }
+    }*/
 
 
 }
