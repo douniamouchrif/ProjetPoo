@@ -17,4 +17,8 @@ public class Tree extends Decor {
     public void doMove(Direction direction){
 
     }
+
+    @Override
+    public void explode() {
+    }
 }
