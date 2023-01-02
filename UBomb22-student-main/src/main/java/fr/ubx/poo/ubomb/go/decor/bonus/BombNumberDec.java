@@ -10,9 +10,6 @@ public class BombNumberDec extends Bonus {
     }
 
     @Override
-    public void explode() {}
-
-    @Override
     public void takenBy(Player player) {
         player.take(this);
     }
