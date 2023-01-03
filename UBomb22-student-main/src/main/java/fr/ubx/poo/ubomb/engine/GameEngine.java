@@ -336,19 +336,19 @@ public final class GameEngine {
             Position left = new Position(player.getPosition().x()-1, player.getPosition().y());
             Position down = new Position (player.getPosition().x(), player.getPosition().y()-1);
             if (player.getKeys() >= 1){
-                if (game.grid().get(right) instanceof DoorClosed){
+                if (game.grid().get(right) instanceof DoorClosed && player.getDirection() == Direction.RIGHT){
                     game.grid().get(right).remove();
                     sprites.add(SpriteFactory.create(layer, new DoorOpened(right)));
                     player.setKeys(player.getKeys()-1);
-                } else if (game.grid().get(up) instanceof DoorClosed){
+                } else if (game.grid().get(up) instanceof DoorClosed && player.getDirection() == Direction.DOWN){
                     game.grid().get(up).remove();
                     sprites.add(SpriteFactory.create(layer, new DoorOpened(up)));
                     player.setKeys(player.getKeys()-1);
-                } else if (game.grid().get(left) instanceof DoorClosed){
+                } else if (game.grid().get(left) instanceof DoorClosed && player.getDirection() == Direction.LEFT){
                     game.grid().get(left).remove();
                     sprites.add(SpriteFactory.create(layer, new DoorOpened(left)));
                     player.setKeys(player.getKeys()-1);
-                } else if (game.grid().get(down) instanceof DoorClosed){
+                } else if (game.grid().get(down) instanceof DoorClosed && player.getDirection() == Direction.UP){
                     game.grid().get(down).remove();
                     sprites.add(SpriteFactory.create(layer, new DoorOpened(down)));
                     player.setKeys(player.getKeys()-1);
