@@ -11,12 +11,13 @@ public class Stone extends Decor {
     public Stone(Position position) {
         super(position);
     }
+    @Override
     public boolean canMove(Direction direction){
         return false;
     }
+    @Override
     public void doMove(Direction direction){
     }
-
     @Override
     public void explode() {
 
