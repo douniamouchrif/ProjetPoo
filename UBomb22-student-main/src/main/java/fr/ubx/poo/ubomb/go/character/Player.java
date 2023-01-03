@@ -4,12 +4,10 @@
 
 package fr.ubx.poo.ubomb.go.character;
 
-import fr.ubx.poo.ubomb.engine.Input;
 import fr.ubx.poo.ubomb.game.Direction;
 import fr.ubx.poo.ubomb.game.Game;
 import fr.ubx.poo.ubomb.game.Position;
 import fr.ubx.poo.ubomb.go.*;
-import fr.ubx.poo.ubomb.go.character.Monster;
 import fr.ubx.poo.ubomb.go.decor.Box;
 import fr.ubx.poo.ubomb.go.decor.bonus.*;
 
@@ -17,7 +15,7 @@ public class Player extends GameObject implements Movable, TakeVisitor , WalkVis
 
     private Direction direction;
     private boolean moveRequested = false;
-    private int lives; //on a enlevé le private final
+    private int lives;
     private int availableBombs;
     private int keys;
     private int range;
@@ -78,7 +76,7 @@ public class Player extends GameObject implements Movable, TakeVisitor , WalkVis
         }
         return false;
     }
-
+    @Override
     public void doMove(Direction direction) {
         // This method is called only if the move is possible, do not check again
         Position nextPos = direction.nextPosition(getPosition());
@@ -119,6 +117,9 @@ public class Player extends GameObject implements Movable, TakeVisitor , WalkVis
     public void setAvailableBombs(int availableBombs) {
         this.availableBombs = availableBombs;
     }
+    public void setKeys(int keys) {
+        this.keys = keys;
+    }
 
     public Direction getDirection() {
         return direction;
@@ -131,7 +132,7 @@ public class Player extends GameObject implements Movable, TakeVisitor , WalkVis
         }
         moveRequested = true;
     }
-
+    @Override
     public final boolean canMove(Direction direction) {
         // Need to be updated ;-)
         Position nextPos = direction.nextPosition(getPosition());
@@ -152,7 +153,7 @@ public class Player extends GameObject implements Movable, TakeVisitor , WalkVis
         }
         moveRequested = false;
     }
-
+    @Override
     public boolean walkableBy(Monster monster) { return true;}
 
     @Override
