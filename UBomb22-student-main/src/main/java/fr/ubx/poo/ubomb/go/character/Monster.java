@@ -11,12 +11,9 @@ public class Monster extends GameObject implements Movable {
     private Direction direction;
     private long lastMove;
 
-    //private int lives;
-
     public Monster(Game game, Position position) {
         super(game, position);
         this.direction = Direction.random();
-        //this.lives = game.configuration().playerLives();
     }
 
     public Direction getDirection() {
@@ -61,7 +58,7 @@ public class Monster extends GameObject implements Movable {
             setModified(true);
         }
     }
-
+    @Override
     public void explode() {
         remove();
     }
