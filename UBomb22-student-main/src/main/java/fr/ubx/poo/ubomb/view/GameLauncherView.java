@@ -60,7 +60,6 @@ public class GameLauncherView extends BorderPane {
             }
         });
 
-
         defaultItem.setOnAction(e -> {
             Game game = GameLauncher.load();
             GameEngine engine = new GameEngine(game, stage);
@@ -71,14 +70,5 @@ public class GameLauncherView extends BorderPane {
         exitItem.setOnAction(e -> System.exit(0));
 
     }
-
-    /*private void updateMapLevel(MapLevel mapLevel) {
-        if (mapLevel != null) {
-            Pane gridView = new GridView(grid, pickerView);
-            this.setCenter(gridView);
-            stage.sizeToScene();
-        }
-    }*/
-
 
 }
