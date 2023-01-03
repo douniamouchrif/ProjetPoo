@@ -9,21 +9,16 @@ import fr.ubx.poo.ubomb.game.Game;
 import fr.ubx.poo.ubomb.game.Position;
 import fr.ubx.poo.ubomb.go.character.Monster;
 import fr.ubx.poo.ubomb.go.character.Player;
-import fr.ubx.poo.ubomb.go.decor.Box;
-import fr.ubx.poo.ubomb.go.decor.Princess;
-import fr.ubx.poo.ubomb.go.decor.Stone;
-import fr.ubx.poo.ubomb.go.decor.Tree;
+import fr.ubx.poo.ubomb.go.decor.*;
 import fr.ubx.poo.ubomb.go.decor.bonus.Bomb;
 import fr.ubx.poo.ubomb.go.decor.bonus.Bonus;
 import fr.ubx.poo.ubomb.view.*;
 import javafx.animation.AnimationTimer;
-import javafx.animation.PauseTransition;
 import javafx.animation.SequentialTransition;
 import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
@@ -33,18 +28,12 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
-//import java.util.Timer;
-//import java.util.TimerTask;
-
-
 public final class GameEngine {
-
     private static AnimationTimer gameLoop;
     private final Game game;
     private final Player player;
@@ -56,7 +45,6 @@ public final class GameEngine {
     private Pane layer;
     private Input input;
     private long invTime;
-
 
     public GameEngine(Game game, final Stage stage) {
         this.stage = stage;
@@ -172,7 +160,6 @@ public final class GameEngine {
                                     monster[y].explode();
                                 }
                             }
-                            
                             if (game.grid().get(new Position(i+x,j)) instanceof Box box && !removedR){
                                 box.explode();
                                 removedR = true;
@@ -342,6 +329,30 @@ public final class GameEngine {
             if (player.getAvailableBombs() > 0) {
                 player.setAvailableBombs(player.getAvailableBombs() - 1);
                 createNewBombs(now);
+            }
+        } else if (input.isKey()) {
+            Position right = new Position(player.getPosition().x()+1, player.getPosition().y());
+            Position up = new Position(player.getPosition().x(), player.getPosition().y()+1);
+            Position left = new Position(player.getPosition().x()-1, player.getPosition().y());
+            Position down = new Position (player.getPosition().x(), player.getPosition().y()-1);
+            if (player.getKeys() >= 1){
+                if (game.grid().get(right) instanceof DoorClosed){
+                    game.grid().get(right).remove();
+                    sprites.add(SpriteFactory.create(layer, new DoorOpened(right)));
+                    player.setKeys(player.getKeys()-1);
+                } else if (game.grid().get(up) instanceof DoorClosed){
+                    game.grid().get(up).remove();
+                    sprites.add(SpriteFactory.create(layer, new DoorOpened(up)));
+                    player.setKeys(player.getKeys()-1);
+                } else if (game.grid().get(left) instanceof DoorClosed){
+                    game.grid().get(left).remove();
+                    sprites.add(SpriteFactory.create(layer, new DoorOpened(left)));
+                    player.setKeys(player.getKeys()-1);
+                } else if (game.grid().get(down) instanceof DoorClosed){
+                    game.grid().get(down).remove();
+                    sprites.add(SpriteFactory.create(layer, new DoorOpened(down)));
+                    player.setKeys(player.getKeys()-1);
+                }
             }
         }
         input.clear();
