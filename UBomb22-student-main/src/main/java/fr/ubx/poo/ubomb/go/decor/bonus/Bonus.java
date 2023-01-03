@@ -24,10 +24,11 @@ public abstract class Bonus extends Decor implements Takeable {
     public void explode() {
         remove();
     }
-
+    @Override
     public boolean canMove(Direction direction){
         return false;
     }
+    @Override
     public void doMove(Direction direction){
 
     }
